@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customize Product | Chetan Mobile</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="config.js" defer></script>
+  <script src="db.js" defer></script>
+  <script src="laptops.js" defer></script>
+  <script src="mobiles.js" defer></script>
+  <script src="cards.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+
+  
+  <div class="announcement-bar">
+    <div class="announcement-slide">
+      <div class="announcement-item">FREE Shipping on Orders Above Rs. 398!</div>
+      <div class="announcement-item">5,500+ Verified Google Reviews - Shop With Confidence</div>
+      <div class="announcement-item">Chosen by 1,50,000+ Customers Across India</div>
+    </div>
+  </div>
+
+  
+  <header id="siteHeader">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="logo" id="logoLink">
+        Chetan <span>Mobile</span>
+      </a>
+      
+      <ul class="nav-links">
+        <li><a href="index.html" id="navHome">Home</a></li>
+        <li><a href="index.html?category=laptop-skins" id="navLaptopSkins">Laptop Skins</a></li>
+        <li><a href="index.html?category=mobile-skins" id="navMobileSkins">Mobile Skins</a></li>
+        <li><a href="index.html?category=mobile-covers" id="navCovers">Phone Covers</a></li>
+        <li><a href="index.html?category=screen-guards" id="navGuards">Screen Guards</a></li>
+        <li><a href="index.html?category=card-skins" id="navCardSkins">Card Skins</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="nav-btn cart-trigger-btn" id="cartOpenButton" aria-label="Open shopping cart">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span class="cart-count-badge" id="headerCartCount" style="display: none;">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  
+  <main class="container">
+    <div class="product-detail-grid">
+      
+      
+      <section class="product-gallery">
+        <div class="main-gallery-img">
+          <img src="" id="mainGalleryImg" alt="Product Image Preview">
+        </div>
+        <div class="gallery-thumbnails" id="galleryThumbnails">
+          
+        </div>
+      </section>
+      
+      
+      <section class="product-details-col">
+        <div class="product-meta-header">
+          <span class="product-brand-title">Chetan Mobile Elite</span>
+          <h1 class="product-detail-title" id="prodDetailTitle">Product Title</h1>
+          
+          <div class="product-rating" style="margin: 8px 0 16px 0;">
+            <span>★★★★★</span>
+            <span style="font-weight: 700;">5.0</span>
+            <span id="prodRatingText" style="color: var(--text-secondary); font-size: 13px; margin-left: 6px;">(1 review)</span>
+          </div>
+
+          <div class="product-detail-price">
+            <span class="price-current" id="prodPriceCurrent">Rs. 0.00</span>
+            <span class="price-regular" id="prodPriceRegular" style="text-decoration: line-through; opacity: 0.7; font-size: 18px; margin-left: 8px; color: var(--text-secondary);">Rs. 0.00</span>
+            <span class="product-badge sale" style="position: static; margin-left: 12px;">Sale</span>
+          </div>
+        </div>
+
+        
+        <div class="product-description" id="prodDescription">
+          
+        </div>
+
+        
+        <div id="prodOptionsContainer" style="display: flex; flex-direction: column; gap: 24px;">
+          
+        </div>
+
+        
+        <div class="purchase-row">
+          <div class="qty-selector">
+            <button class="qty-btn" id="qtyMinus" type="button" aria-label="Decrease quantity">−</button>
+            <input type="number" class="qty-input" id="qtyVal" value="1" min="1" step="1">
+            <button class="qty-btn" id="qtyPlus" type="button" aria-label="Increase quantity">+</button>
+          </div>
+          <button class="btn-add-cart" id="btnAddToCart" data-product-id="" data-product-title="" data-product-price="">
+            <span>Add to Cart</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+          </button>
+        </div>
+
+        
+        <div class="product-accordions">
+          
+          <details open>
+            <summary>Delivery Details</summary>
+            <div class="accordion-content">
+              <p>• All orders are custom-printed and dispatched from our facility within <strong>1–3 business days</strong>.</p>
+              <p>• Estimated shipping duration is 3–6 days across India.</p>
+              <p>• Tracking link is sent via SMS / Email once dispatched.</p>
+            </div>
+          </details>
+
+          
+          <details>
+            <summary>How to Apply</summary>
+            <div class="accordion-content">
+              <p>• <strong>Step 1:</strong> Clean your device thoroughly with the provided wet/dry wipes.</p>
+              <p>• <strong>Step 2:</strong> Peel the skin off the backing paper carefully.</p>
+              <p>• <strong>Step 3:</strong> Align the skin with the camera cutout, ports, and logo details first.</p>
+              <p>• <strong>Step 4:</strong> Apply light pressure from the center outwards. Use a hairdryer on edges and corners to activate the 3M adhesive bonding for a flat, bubble-free adhesive fit.</p>
+            </div>
+          </details>
+
+          
+          <details>
+            <summary>Customer Reviews (Verified)</summary>
+            <div class="accordion-content">
+              <div style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--border-color);">
+                <div style="color: var(--accent); font-weight: 700; margin-bottom: 4px;">★★★★★ Rajaprabu S.</div>
+                <p>"Ordered the GTR skin for my Macbook Pro. Precision cutout is absolute perfection. Edge to edge alignment matches the curves exactly. Highly recommend!"</p>
+              </div>
+              <div style="margin-bottom: 4px;">
+                <div style="color: var(--accent); font-weight: 700; margin-bottom: 4px;">★★★★★ Chetan Kumar</div>
+                <p>"Amazing quality carbon skin. The material feels premium in hand, prevents fingerprint marks and has a very tactile texture. Easy installation."</p>
+              </div>
+            </div>
+          </details>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  
+  <section class="container" style="border-top: 1px solid var(--border-color); padding-top: 60px;" id="relatedProductsSection">
+    <h2 style="font-family: var(--font-heading); font-size: 24px; text-transform: uppercase; margin-bottom: 32px; letter-spacing: 0.05em; text-align: center;">You May Also Like</h2>
+    <div class="product-grid" id="relatedProductsGrid">
+      
+    </div>
+  </section>
+
+  
+  <div class="cart-drawer-overlay" id="cartDrawerOverlay">
+    <div class="cart-drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-label="Shopping Cart">
+      <div class="cart-header">
+        <h2 style="font-family: var(--font-heading); font-size: 20px; text-transform: uppercase;">Shopping Cart</h2>
+        <button class="cart-close-btn" id="cartCloseBtn" aria-label="Close cart">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      
+      <div class="cart-items-wrapper" id="cartItemsWrapper">
+        
+      </div>
+      
+      <div class="cart-footer">
+        <div class="cart-subtotal-row">
+          <span>Subtotal</span>
+          <span id="cartSubtotalAmount">Rs. 0.00</span>
+        </div>
+        <button class="btn-checkout" id="checkoutBtn">Proceed To Buy</button>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="modal-overlay" id="checkoutModalOverlay">
+    <div class="checkout-modal" id="checkoutModalContent">
+      <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close form">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <h3 class="modal-title">Checkout details</h3>
+      
+      <form class="checkout-form" id="checkoutForm">
+        <div class="form-group">
+          <label for="chkName">Full Name</label>
+          <input type="text" id="chkName" class="form-input" placeholder="e.g. Chetan Kumar" required>
+        </div>
+        <div class="form-group">
+          <label for="chkPhone">Phone Number</label>
+          <input type="tel" id="chkPhone" class="form-input" placeholder="e.g. +91 98765 43210" required>
+        </div>
+        <div class="form-group">
+          <label for="chkAddress">Delivery Address</label>
+          <textarea id="chkAddress" class="form-input" rows="3" placeholder="e.g. Flat 102, Chetan Heights, Mumbai" style="resize: none; font-family: inherit;" required></textarea>
+        </div>
+        <button type="submit" class="btn-checkout" style="margin-top: 10px;">Place Order (Cash On Delivery)</button>
+      </form>
+    </div>
+  </div>
+
+  
+  <footer>
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <h3 id="footerLogo">Chetan Mobile</h3>
+        <p>Your one-stop destination for high-quality, minimalist mobile skins, screen protectors, cases, and laptop wraps. Crafted with precision in India.</p>
+        <p style="font-weight: 700; color: var(--text-primary);">WhatsApp Support: +91 93722 92223</p>
+      </div>
+      
+      <div class="footer-col">
+        <h4>Catalog</h4>
+        <ul class="footer-links-list">
+          <li><a href="index.html?category=laptop-skins">Laptop Skins</a></li>
+          <li><a href="index.html?category=mobile-skins">Mobile Skins</a></li>
+          <li><a href="index.html?category=mobile-covers">Phone Covers</a></li>
+          <li><a href="index.html?category=screen-guards">Screen Guards</a></li>
+          <li><a href="index.html?category=card-skins">Card Skins</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+         <h4>Support</h4>
+         <ul class="footer-links-list">
+           <li><a href="support.html#contact" id="footContact">Contact Us</a></li>
+           <li><a href="support.html#how-to-apply" id="footHowTo">How to Apply</a></li>
+           <li><a href="support.html#track" id="footTrack">Track Order</a></li>
+           <li><a href="support.html#faq" id="footFaq">FAQs</a></li>
+         </ul>
+       </div>
+ 
+       <div class="footer-col">
+         <h4>Policies</h4>
+         <ul class="footer-links-list">
+           <li><a href="support.html#privacy" id="footPrivacy">Privacy Policy</a></li>
+           <li><a href="support.html#refund" id="footRefund">Refund Policy</a></li>
+           <li><a href="support.html#shipping" id="footShipping">Shipping Policy</a></li>
+           <li><a href="support.html#terms" id="footTerms">Terms of Service</a></li>
+         </ul>
+       </div>
+    </div>
+    
+    <div class="container footer-bottom">
+      <p>&copy; 2026 Chetan Mobile. Built with precision and care.</p>
+      <p>Payment Options: Cash on Delivery (COD) / UPI</p>
+    </div>
+  </footer>
+
+</body>
+</html>
