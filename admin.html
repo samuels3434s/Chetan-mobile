@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | Chetan Mobile</title>
+  <link rel="stylesheet" href="admin.css">
+  <script src="config.js" defer></script>
+  <script src="db.js" defer></script>
+  <script src="admin.js" defer></script>
+</head>
+<body>
+
+  
+  <div class="announcement-bar" style="background-color: var(--admin-bg-secondary); border-bottom: 1px solid var(--admin-border); padding: 8px 0; text-align: center; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--admin-accent);">
+    ADMIN MODE - Manage Catalog Inventory
+  </div>
+
+  
+  <div id="adminLoginGate" class="login-gate-wrapper">
+    <div class="login-card" id="loginCard">
+      <div class="login-logo">
+        Chetan <span>Mobile</span>
+      </div>
+      <h2 class="login-title">Control Panel Access</h2>
+      <p class="login-subtitle">Please enter the security password to manage catalog inventory.</p>
+      
+      <form id="adminLoginForm">
+        <div class="form-group" style="position: relative; margin-bottom: 24px;">
+          <label class="form-label" for="adminPasswordInput" style="text-align: left;">Security Password</label>
+          <input type="password" id="adminPasswordInput" class="form-input" placeholder="••••••••" required>
+          <button type="button" id="btnTogglePassword" class="password-toggle-btn" aria-label="Toggle password visibility">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+          </button>
+        </div>
+        <button type="submit" class="btn-primary" style="height: 48px; border-radius: 6px; font-weight: 700; text-transform: uppercase;">Unlock Dashboard</button>
+      </form>
+      <a href="index.html" class="back-link">← Return to Storefront</a>
+    </div>
+  </div>
+
+  <div id="adminDashboardContent" style="display: none;">
+    <header class="admin-navbar">
+      <div class="container nav-wrapper">
+        <a href="index.html" class="nav-logo">
+          Chetan <span>Mobile</span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="index.html">View Storefront</a></li>
+          <li><a href="support.html">Support Center</a></li>
+          <li><a href="#" id="adminLogoutLink">Logout</a></li>
+        </ul>
+      </div>
+    </header>
+
+  <main class="container">
+    <div class="admin-header-row">
+      <div>
+        <p class="admin-subtitle">Back Office</p>
+        <h1 class="admin-title">Catalog Admin</h1>
+      </div>
+      <button class="btn-outline" onclick="window.location.href='index.html'">Go To Store</button>
+    </div>
+
+    <div class="admin-grid">
+      
+      
+      <div class="admin-card">
+        <h2 class="card-title" id="formCardTitle">Add New Product</h2>
+        <form id="adminAddForm">
+          <div class="form-group">
+            <label class="form-label" for="prodName">Product Name</label>
+            <input type="text" id="prodName" class="form-input" placeholder="e.g. Leather Matte Carbon Skin" required>
+          </div>
+
+          
+          <div class="form-group">
+            <label class="form-label" for="prodCategory">Category / Product Type</label>
+            <select id="prodCategory" class="form-select" required>
+              <option value="laptop-skins">Laptop Skins</option>
+              <option value="mobile-skins">Mobile Skins</option>
+              <option value="mobile-covers">Phone Covers</option>
+              <option value="screen-guards">Screen Guards</option>
+              <option value="card-skins">Card Skins</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="prodImages">Image URLs (One per line, Priority 1 is main)</label>
+            <textarea id="prodImages" class="form-textarea" rows="4" placeholder="https://images.unsplash.com/image-1 (Main)&#10;https://images.unsplash.com/image-2 (Thumb 1)" required></textarea>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" for="prodPrice" id="labelPrice">Sale Price (Rs.)</label>
+              <input type="number" id="prodPrice" class="form-input" min="1" step="0.01" value="299.00" required>
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" for="prodRegularPrice" id="labelRegularPrice">Regular Price (Rs.)</label>
+              <input type="number" id="prodRegularPrice" class="form-input" min="1" step="0.01" value="999.00" required>
+            </div>
+          </div>
+
+          
+          <div id="laptopPricingSection" style="display: none; border: 1px dashed var(--admin-border); padding: 16px; border-radius: 8px; margin-bottom: 16px; background-color: rgba(255,255,255,0.02);">
+            <span style="font-size: 11px; color: var(--admin-accent); font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 12px; letter-spacing: 0.05em;">Laptop Skin Area Custom Pricing</span>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label" for="prodKeypadPrice" style="font-size: 11px;">Keypad Only Sale (Rs.)</label>
+                <input type="number" id="prodKeypadPrice" class="form-input" placeholder="e.g. 349.00" min="1" step="0.01">
+              </div>
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label" for="prodKeypadRegularPrice" style="font-size: 11px;">Keypad Only Regular (Rs.)</label>
+                <input type="number" id="prodKeypadRegularPrice" class="form-input" placeholder="e.g. 1299.00" min="1" step="0.01">
+              </div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label" for="prodBothPrice" style="font-size: 11px;">Top + Keypad Sale (Rs.)</label>
+                <input type="number" id="prodBothPrice" class="form-input" placeholder="e.g. 599.00" min="1" step="0.01">
+              </div>
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label" for="prodBothRegularPrice" style="font-size: 11px;">Top + Keypad Regular (Rs.)</label>
+                <input type="number" id="prodBothRegularPrice" class="form-input" placeholder="e.g. 2199.00" min="1" step="0.01">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="prodStock">Stock Status</label>
+            <select id="prodStock" class="form-select" required>
+              <option value="true">In Stock</option>
+              <option value="false">Out of Stock</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="prodDesc">Description</label>
+            <textarea id="prodDesc" class="form-textarea" rows="3" placeholder="Minimalist product description..."></textarea>
+          </div>
+
+          <p style="font-size: 11px; color: var(--admin-text-secondary); margin-bottom: 20px; line-height: 1.4;">
+            *Compatible brand and model selection forms are automatically generated by storefront templates based on the product category.
+          </p>
+
+          <button type="submit" class="btn-primary" id="btnSubmitForm">Create Product</button>
+          <button type="button" class="btn-outline" id="btnCancelEdit" style="display: none; width: 100%; margin-top: 10px;">Cancel Edit</button>
+        </form>
+      </div>
+
+      
+      <div>
+        <div class="form-group" style="margin-bottom: 24px;">
+          <label class="form-label" for="searchCode">Search Inventory</label>
+          <input type="text" id="searchCode" class="form-input" placeholder="Search by Product Code / SKU..." style="background-color: var(--admin-bg-secondary);">
+        </div>
+        
+        <div class="table-wrapper">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Img</th>
+                <th>SKU</th>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adminTableBody">
+              
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+  </div>
+
+</body>
+</html>
