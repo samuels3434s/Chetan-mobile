@@ -879,6 +879,72 @@ async function renderCatalogGrid() {
 
 // 8. Initialize dynamic page bindings
 document.addEventListener('DOMContentLoaded', async () => {
+  // ── Theme Toggle System ──
+  function initTheme() {
+    const root = document.documentElement;
+    const stored = localStorage.getItem('chetan_theme');
+    
+    if (stored === 'dark') {
+      root.classList.remove('theme-light');
+      root.classList.add('theme-dark');
+    } else if (stored === 'light') {
+      root.classList.remove('theme-dark');
+      root.classList.add('theme-light');
+    }
+    // If no stored preference, CSS prefers-color-scheme handles it automatically
+
+    const toggleBtn = document.getElementById('themeToggleBtn');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', () => {
+        const isDark = root.classList.contains('theme-dark') ||
+          (!root.classList.contains('theme-light') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        
+        if (isDark) {
+          root.classList.remove('theme-dark');
+          root.classList.add('theme-light');
+          localStorage.setItem('chetan_theme', 'light');
+        } else {
+          root.classList.remove('theme-light');
+          root.classList.add('theme-dark');
+          localStorage.setItem('chetan_theme', 'dark');
+        }
+      });
+    }
+  }
+  initTheme();
+
+  // ── Mobile Hamburger Menu ──
+  function initMobileMenu() {
+    const menuBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.querySelector('.nav-links');
+    const overlay = document.getElementById('mobileMenuOverlay');
+    const closeBtn = document.getElementById('mobileNavCloseBtn');
+
+    function openMenu() {
+      if (navLinks) navLinks.classList.add('active');
+      if (overlay) overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      if (navLinks) navLinks.classList.remove('active');
+      if (overlay) overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    if (menuBtn) menuBtn.addEventListener('click', openMenu);
+    if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+    if (overlay) overlay.addEventListener('click', closeMenu);
+
+    // Close menu when a nav link is clicked (on mobile)
+    if (navLinks) {
+      navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+      });
+    }
+  }
+  initMobileMenu();
+
   // Update header navigation link highlight matching current URL
   updateActiveNavLink();
 
