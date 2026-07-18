@@ -23,10 +23,13 @@ service cloud.firestore {
       allow read: if true;
       
       // Prevent write actions unless the request has valid data structure
-      allow write: if request.resource.data.id == productId
-                   && request.resource.data.title is string
-                   && request.resource.data.price is number
-                   && request.resource.data.price > 0;
+      allow create, update: if request.resource.data.id == productId
+                            && request.resource.data.title is string
+                            && request.resource.data.price is number
+                            && request.resource.data.price > 0;
+      
+      // Allow deleting products from the admin panel
+      allow delete: if true;
     }
     
     // Prevent access to all other collections by default
