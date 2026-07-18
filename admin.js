@@ -229,6 +229,7 @@ async function refreshAdminTable() {
 }
 
 window.editProduct = async function(id) {
+  if (window.resetUploaderFields) window.resetUploaderFields();
   const catalog = await getCatalog();
   const prod = catalog[id];
   if (!prod) return;
@@ -278,6 +279,7 @@ window.editProduct = async function(id) {
 function cancelEdit() {
   editingProductId = null;
   document.getElementById('adminAddForm').reset();
+  if (window.resetUploaderFields) window.resetUploaderFields();
   
   document.getElementById('formCardTitle').textContent = "Add New Product";
   document.getElementById('btnSubmitForm').textContent = "Create Product";
@@ -602,49 +604,115 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   // Handle local image file selector upload & WebP conversion
-  const fileUploadInput = document.getElementById('prodImageUpload');
+  const uploadContainer = document.getElementById('imageUploadContainer');
+  const addFieldBtn = document.getElementById('btnAddImageField');
+  const additionalContainer = document.getElementById('additionalImagesContainer');
   const uploadStatus = document.getElementById('imageUploadStatus');
   const imagesTextarea = document.getElementById('prodImages');
 
-  if (fileUploadInput) {
-    fileUploadInput.addEventListener('change', async (e) => {
-      const files = Array.from(e.target.files).slice(0, 2);
-      if (files.length === 0) return;
+  // Clear dynamic image upload fields
+  window.resetUploaderFields = function() {
+    if (additionalContainer) additionalContainer.innerHTML = '';
+    if (addFieldBtn) addFieldBtn.style.display = 'flex';
+    const mainInput = document.querySelector('.image-upload-row input[type="file"]');
+    if (mainInput) {
+      mainInput.value = '';
+      delete mainInput.dataset.uploadedUrl;
+    }
+  };
+
+  // Dynamically add progressive upload fields
+  if (addFieldBtn && additionalContainer) {
+    addFieldBtn.addEventListener('click', () => {
+      const currentInputs = document.querySelectorAll('.prod-image-input');
+      if (currentInputs.length >= 5) {
+        showToast("Maximum of 5 images allowed.", "error");
+        return;
+      }
+
+      const row = document.createElement('div');
+      row.className = 'image-upload-row';
+      row.style.cssText = 'margin-bottom: 10px; display: flex; align-items: center; gap: 8px;';
+      row.innerHTML = `
+        <div style="flex-grow: 1;">
+          <span style="font-size: 11px; color: var(--admin-text-secondary); display: block; margin-bottom: 4px;">Additional Image</span>
+          <input type="file" class="form-input prod-image-input" accept="image/*" style="background-color: var(--admin-bg-primary); border-style: dashed; padding: 10px;">
+        </div>
+        <button type="button" class="btn-delete remove-image-field-btn" style="width: auto; padding: 8px 12px; margin-top: 18px; background-color: transparent; border: 1px solid var(--admin-border); color: var(--admin-text-secondary); height: 38px; border-radius: 4px; display: flex; align-items: center; justify-content: center;" title="Remove field">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      `;
+
+      additionalContainer.appendChild(row);
+
+      // Hide add button if we reached 5 fields
+      if (currentInputs.length + 1 >= 5) {
+        addFieldBtn.style.display = 'none';
+      }
+
+      // Bind remove button
+      row.querySelector('.remove-image-field-btn').addEventListener('click', () => {
+        row.remove();
+        if (addFieldBtn) addFieldBtn.style.display = 'flex';
+        rebuildImagesTextarea();
+      });
+    });
+  }
+
+  // Helper to rebuild images list from inputs
+  function rebuildImagesTextarea() {
+    if (!uploadContainer) return;
+    const inputs = Array.from(uploadContainer.querySelectorAll('.prod-image-input'));
+    const urls = inputs
+      .map(input => input.dataset.uploadedUrl)
+      .filter(url => url && url.trim() !== '');
+
+    if (imagesTextarea) {
+      imagesTextarea.value = urls.join('\n');
+    }
+  }
+
+  // Handle file changes and auto-convert to WebP
+  if (uploadContainer) {
+    uploadContainer.addEventListener('change', async (e) => {
+      if (!e.target.classList.contains('prod-image-input')) return;
+      
+      const file = e.target.files[0];
+      if (!file) {
+        delete e.target.dataset.uploadedUrl;
+        rebuildImagesTextarea();
+        return;
+      }
 
       if (uploadStatus) {
         uploadStatus.style.display = 'block';
         uploadStatus.style.color = 'var(--admin-accent)';
-        uploadStatus.textContent = 'Converting to WebP & uploading...';
+        uploadStatus.textContent = 'Converting to WebP...';
       }
 
-      // Generate a temporary fallback slug from product name if empty
       const prodNameVal = document.getElementById('prodName').value.trim();
       const prodId = prodNameVal.toLowerCase().replace(/[^a-z0-9]+/g, '-') || `uploaded-product-${Math.floor(Math.random() * 1000)}`;
 
-      const uploadedUrls = [];
       try {
-        for (const file of files) {
-          const webpBlob = await compressAndConvertToWebP(file, 0.8);
-          const downloadUrl = await db.uploadProductImage(prodId, webpBlob);
-          uploadedUrls.push(downloadUrl);
-        }
-
-        if (imagesTextarea) {
-          const currentUrls = imagesTextarea.value.trim().split('\n').filter(url => url.trim() !== '');
-          const combined = [...uploadedUrls, ...currentUrls];
-          imagesTextarea.value = combined.join('\n');
-        }
+        const webpBlob = await compressAndConvertToWebP(file, 0.8);
+        const base64Url = await db.uploadProductImage(prodId, webpBlob);
+        
+        e.target.dataset.uploadedUrl = base64Url;
+        rebuildImagesTextarea();
 
         if (uploadStatus) {
           uploadStatus.style.color = 'var(--admin-accent)';
-          uploadStatus.textContent = `Successfully uploaded ${files.length} WebP images!`;
-          setTimeout(() => { uploadStatus.style.display = 'none'; }, 5000);
+          uploadStatus.textContent = 'WebP converted & ready!';
+          setTimeout(() => { uploadStatus.style.display = 'none'; }, 3000);
         }
       } catch (err) {
-        console.error("Image upload processing failed:", err);
+        console.error("WebP processing failed:", err);
         if (uploadStatus) {
           uploadStatus.style.color = '#D9534F';
-          uploadStatus.textContent = 'Failed to upload images. Check console.';
+          uploadStatus.textContent = 'Failed to process image.';
         }
       }
     });
