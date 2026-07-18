@@ -519,11 +519,9 @@ async function loadProductDetails() {
     mainImgWrapper.classList.remove('skeleton-pulse');
     mainImgWrapper.style.backgroundColor = 'transparent';
   }
-  const mainImg = document.getElementById('mainGalleryImg');
   if (mainImg) {
     mainImg.style.display = 'block';
   }
-  const thumbWrapper = document.getElementById('galleryThumbnails');
   if (thumbWrapper) {
     thumbWrapper.style.opacity = '1';
   }
