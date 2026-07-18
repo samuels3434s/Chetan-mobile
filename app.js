@@ -491,6 +491,42 @@ async function loadProductDetails() {
       if (svg) svg.style.display = 'block';
     }
   }
+
+  // Hide skeletons and reveal real product content
+  const skeletonsToHide = [
+    'titleSkeleton', 'ratingSkeleton', 'priceSkeleton',
+    'descSkeleton', 'optionsSkeleton'
+  ];
+  skeletonsToHide.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+  });
+
+  const elementsToShow = [
+    { id: 'prodDetailTitle', display: 'block' },
+    { id: 'prodRatingBlock', display: 'flex' },
+    { id: 'prodPriceBlock', display: 'block' },
+    { id: 'prodDescription', display: 'block' },
+    { id: 'prodOptionsContainer', display: 'flex' }
+  ];
+  elementsToShow.forEach(item => {
+    const el = document.getElementById(item.id);
+    if (el) el.style.display = item.display;
+  });
+
+  const mainImgWrapper = document.getElementById('mainGalleryImgWrapper');
+  if (mainImgWrapper) {
+    mainImgWrapper.classList.remove('skeleton-pulse');
+    mainImgWrapper.style.backgroundColor = 'transparent';
+  }
+  const mainImg = document.getElementById('mainGalleryImg');
+  if (mainImg) {
+    mainImg.style.display = 'block';
+  }
+  const thumbWrapper = document.getElementById('galleryThumbnails');
+  if (thumbWrapper) {
+    thumbWrapper.style.opacity = '1';
+  }
 }
 
 // 7. Render dynamic inputs based on category
