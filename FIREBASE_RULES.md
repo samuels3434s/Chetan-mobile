@@ -37,30 +37,4 @@ service cloud.firestore {
 }
 ```
 
----
 
-## 2. Firebase Storage Rules
-
-These rules allow anyone to view product images, but restrict image uploads to valid image file types under 5MB.
-
-Copy and paste this configuration into your **Firebase Console** under:
-`Storage` -> `Rules` tab:
-
-```javascript
-rules_version = '2';
-
-service firebase.storage {
-  match /b/{bucket}/o {
-    
-    // Rules for the product images folder
-    match /products/{allPaths=**} {
-      // Anyone can read product images
-      allow read: if true;
-      
-      // Restrict uploads to valid image files (PNG, JPEG, WebP, SVG) under 5MB
-      allow write: if request.resource.size < 5 * 1024 * 1024
-                   && request.resource.contentType.matches('image/.*');
-    }
-  }
-}
-```
