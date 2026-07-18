@@ -2043,3 +2043,63 @@ html {
   }
 }
 
+/* --- Storefront Skeleton Loader --- */
+.skeleton-card {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-large);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  height: 100%;
+}
+
+.skeleton-img {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: var(--radius-medium);
+  background-color: var(--border-color);
+}
+
+.skeleton-text {
+  height: 16px;
+  border-radius: var(--radius-small);
+  background-color: var(--border-color);
+}
+
+.skeleton-rating {
+  width: 35%;
+  height: 12px;
+}
+
+.skeleton-title {
+  width: 80%;
+  height: 20px;
+}
+
+.skeleton-price {
+  width: 25%;
+  height: 16px;
+}
+
+.skeleton-pulse {
+  background: linear-gradient(
+    90deg,
+    var(--border-color) 25%,
+    rgba(184, 156, 114, 0.15) 50%,
+    var(--border-color) 75%
+  );
+  background-size: 200% 100%;
+  animation: pulseSkeleton 1.5s infinite linear;
+}
+
+@keyframes pulseSkeleton {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+

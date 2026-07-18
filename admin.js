@@ -584,6 +584,97 @@ document.addEventListener('DOMContentLoaded', async () => {
     cancelBtn.addEventListener('click', cancelEdit);
   }
 
+  // WebP Image compressor and converter
+  async function compressAndConvertToWebP(file, quality = 0.8) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const maxDim = 1200;
+          let width = img.width;
+          let height = img.height;
+          if (width > maxDim || height > maxDim) {
+            if (width > height) {
+              height = Math.round((height * maxDim) / width);
+              width = maxDim;
+            } else {
+              width = Math.round((width * maxDim) / height);
+              height = maxDim;
+            }
+          }
+          canvas.width = width;
+          canvas.height = height;
+          
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          
+          canvas.toBlob((blob) => {
+            if (blob) {
+              resolve(blob);
+            } else {
+              reject(new Error("Canvas conversion to Blob failed"));
+            }
+          }, 'image/webp', quality);
+        };
+        img.onerror = () => reject(new Error("Failed to load image element"));
+        img.src = e.target.result;
+      };
+      reader.onerror = () => reject(new Error("Failed to read file"));
+      reader.readAsDataURL(file);
+    });
+  }
+
+  // Handle local image file selector upload & WebP conversion
+  const fileUploadInput = document.getElementById('prodImageUpload');
+  const uploadStatus = document.getElementById('imageUploadStatus');
+  const imagesTextarea = document.getElementById('prodImages');
+
+  if (fileUploadInput) {
+    fileUploadInput.addEventListener('change', async (e) => {
+      const files = Array.from(e.target.files).slice(0, 2);
+      if (files.length === 0) return;
+
+      if (uploadStatus) {
+        uploadStatus.style.display = 'block';
+        uploadStatus.style.color = 'var(--admin-accent)';
+        uploadStatus.textContent = 'Converting to WebP & uploading...';
+      }
+
+      // Generate a temporary fallback slug from product name if empty
+      const prodNameVal = document.getElementById('prodName').value.trim();
+      const prodId = prodNameVal.toLowerCase().replace(/[^a-z0-9]+/g, '-') || `uploaded-product-${Math.floor(Math.random() * 1000)}`;
+
+      const uploadedUrls = [];
+      try {
+        for (const file of files) {
+          const webpBlob = await compressAndConvertToWebP(file, 0.8);
+          const downloadUrl = await db.uploadProductImage(prodId, webpBlob);
+          uploadedUrls.push(downloadUrl);
+        }
+
+        if (imagesTextarea) {
+          const currentUrls = imagesTextarea.value.trim().split('\n').filter(url => url.trim() !== '');
+          const combined = [...uploadedUrls, ...currentUrls];
+          imagesTextarea.value = combined.join('\n');
+        }
+
+        if (uploadStatus) {
+          uploadStatus.style.color = 'var(--admin-accent)';
+          uploadStatus.textContent = `Successfully uploaded ${files.length} WebP images!`;
+          setTimeout(() => { uploadStatus.style.display = 'none'; }, 5000);
+        }
+      } catch (err) {
+        console.error("Image upload processing failed:", err);
+        if (uploadStatus) {
+          uploadStatus.style.color = '#D9534F';
+          uploadStatus.textContent = 'Failed to upload images. Check console.';
+        }
+      }
+    });
+  }
+
   const categorySelect = document.getElementById('prodCategory');
   const pricingSec = document.getElementById('laptopPricingSection');
   const labelPrice = document.getElementById('labelPrice');

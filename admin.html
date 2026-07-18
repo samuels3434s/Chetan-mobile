@@ -90,6 +90,12 @@
           </div>
 
           <div class="form-group">
+            <label class="form-label" for="prodImageUpload">Upload Product Images (Max 2, Auto WebP)</label>
+            <input type="file" id="prodImageUpload" class="form-input" accept="image/*" multiple style="background-color: var(--admin-bg-primary); border-style: dashed; padding: 14px;">
+            <div id="imageUploadStatus" style="font-size: 11px; color: var(--admin-accent); margin-top: 6px; display: none; font-weight: 700;">Converting & uploading...</div>
+          </div>
+
+          <div class="form-group">
             <label class="form-label" for="prodImages">Image URLs (One per line, Priority 1 is main)</label>
             <textarea id="prodImages" class="form-textarea" rows="4" placeholder="https://images.unsplash.com/image-1 (Main)&#10;https://images.unsplash.com/image-2 (Thumb 1)" required></textarea>
           </div>

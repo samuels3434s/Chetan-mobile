@@ -20,7 +20,7 @@ const db = {
   // Helper to load Firebase scripts dynamically
   _loadFirebaseSDK() {
     return new Promise((resolve, reject) => {
-      if (window.firebase) {
+      if (window.firebase && window.firebase.storage) {
         resolve();
         return;
       }
@@ -30,13 +30,47 @@ const db = {
       scriptApp.onload = () => {
         const scriptDb = document.createElement('script');
         scriptDb.src = "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js";
-        scriptDb.onload = () => resolve();
+        scriptDb.onload = () => {
+          const scriptStorage = document.createElement('script');
+          scriptStorage.src = "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js";
+          scriptStorage.onload = () => resolve();
+          scriptStorage.onerror = (e) => reject(new Error("Failed to load Firebase Storage SDK: " + e));
+          document.head.appendChild(scriptStorage);
+        };
         scriptDb.onerror = (e) => reject(new Error("Failed to load Firestore SDK: " + e));
         document.head.appendChild(scriptDb);
       };
       scriptApp.onerror = (e) => reject(new Error("Failed to load Firebase SDK: " + e));
       document.head.appendChild(scriptApp);
     });
+  },
+
+  // Upload product image WebP Blob to Firebase Storage (or Base64 in Local)
+  async uploadProductImage(productId, fileBlob) {
+    await this.init();
+
+    if (DB_CONFIG.DRIVER === 'firebase') {
+      try {
+        const storageRef = firebase.storage().ref();
+        const filename = `products/${productId}-${Date.now()}.webp`;
+        const fileRef = storageRef.child(filename);
+        
+        const snapshot = await fileRef.put(fileBlob);
+        const downloadURL = await snapshot.ref.getDownloadURL();
+        return downloadURL;
+      } catch (err) {
+        console.error("Firebase image upload failed:", err);
+        throw err;
+      }
+    } else {
+      // Local Mode: return Base64 string from blob
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(fileBlob);
+      });
+    }
   },
 
   // Fetch entire catalog list

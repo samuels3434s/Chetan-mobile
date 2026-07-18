@@ -13,8 +13,8 @@ const PRODUCT_DATABASE = {
     rating: 4.9,
     reviews: 142,
     images: [
-      "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=800&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=800&auto=format&fit=crop&q=80"
+      "images/products/custom-laptop-1.webp",
+      "images/products/custom-laptop-2.webp"
     ],
     description: "Upload your own image or design to print a custom laptop skin. Made from 3M vinyl with a matte finish. Protects against scratches and removes clean without residue."
   },
@@ -27,8 +27,8 @@ const PRODUCT_DATABASE = {
     rating: 5.0,
     reviews: 86,
     images: [
-      "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=800&auto=format&fit=crop&q=80"
+      "images/products/gtr-laptop-1.webp",
+      "images/products/gtr-laptop-2.webp"
     ],
     description: "High-resolution print of the Nissan GTR sports car. Precision cut from 3M vinyl. Fits your laptop dimensions precisely and protects against surface scratches."
   },
@@ -41,8 +41,8 @@ const PRODUCT_DATABASE = {
     rating: 4.8,
     reviews: 94,
     images: [
-      "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1604871000636-074fa5117945?w=800&auto=format&fit=crop&q=80"
+      "images/products/topography-laptop-1.webp",
+      "images/products/topography-laptop-2.webp"
     ],
     description: "Gold topographic contour lines over a matte black background. Cut to fit your laptop dimensions exactly to shield the surface from everyday wear."
   },
@@ -55,8 +55,8 @@ const PRODUCT_DATABASE = {
     rating: 4.9,
     reviews: 53,
     images: [
-      "https://images.unsplash.com/photo-1607853202273-797f1c22a38e?w=800&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&auto=format&fit=crop&q=80"
+      "images/products/bmw-laptop-1.webp",
+      "images/products/bmw-laptop-2.webp"
     ],
     description: "Sport BMW M2 graphics printed on scratch-resistant vinyl. Wraps tightly around your laptop lid to prevent scuffs while keeping a thin profile."
   },
@@ -69,8 +69,8 @@ const PRODUCT_DATABASE = {
     rating: 4.9,
     reviews: 312,
     images: [
-      "https://images.unsplash.com/photo-1508921912186-1d1a45ebb3c1?w=800&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1526738549149-8e07eca6c147?w=800&auto=format&fit=crop&q=80"
+      "images/products/carbon-mobile-1.webp",
+      "images/products/carbon-mobile-2.webp"
     ],
     description: "Textured carbon fiber vinyl skin for mobile back panels. Adds texture to improve hand grip and shields the back glass from scratches and light impacts."
   },
@@ -83,8 +83,8 @@ const PRODUCT_DATABASE = {
     rating: 5.0,
     reviews: 215,
     images: [
-      "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=800&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=800&auto=format&fit=crop&q=80"
+      "images/products/berserk-mobile-1.webp",
+      "images/products/berserk-mobile-2.webp"
     ],
     description: "Manga illustration of Guts from Berserk. Matte, anti-glare print resists fingerprints and scuffs on your phone's back glass."
   },
@@ -97,8 +97,8 @@ const PRODUCT_DATABASE = {
     rating: 4.7,
     reviews: 67,
     images: [
-      "https://images.unsplash.com/photo-1610792516307-ea5acd9c3b00?w=800&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1584438784894-089d6a128f3e?w=800&auto=format&fit=crop&q=80"
+      "images/products/topography-cover-1.webp",
+      "images/products/topography-cover-2.webp"
     ],
     description: "TPU protective case with a matte topographic pattern. Reinforced corners provide shock absorption against drops without adding bulk."
   },
@@ -111,8 +111,8 @@ const PRODUCT_DATABASE = {
     rating: 4.8,
     reviews: 188,
     images: [
-      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1496181130204-7552cc1524e2?w=800&auto=format&fit=crop&q=80"
+      "images/products/clear-guard-1.webp",
+      "images/products/clear-guard-2.webp"
     ],
     description: "Hydrogel screen protector film. Protects your screen glass from scratches and smudges while maintaining touch responsiveness."
   },
@@ -125,8 +125,8 @@ const PRODUCT_DATABASE = {
     rating: 4.9,
     reviews: 110,
     images: [
-      "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=800&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1563013544-824ae1d704d3?w=800&auto=format&fit=crop&q=80"
+      "images/products/metro-card-1.webp",
+      "images/products/metro-card-2.webp"
     ],
     description: "Vinyl adhesive skin styled like a retro metro token. Made from card-reader-friendly thin film, with pre-cut openings for standard payment card chips."
   }
@@ -721,8 +721,8 @@ async function renderRelatedProducts(category, currentId) {
       <a href="product.html?id=${prod.id}">
         <div class="product-img-wrapper">
           <span class="product-badge sale">Sale</span>
-          <img src="${prod.images && prod.images.length > 0 ? prod.images[0] : 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=800'}" alt="${prod.title}" class="product-img primary">
-          <img src="${hoverImage}" alt="${prod.title}" class="product-img secondary">
+          <img src="${prod.images && prod.images.length > 0 ? prod.images[0] : 'images/products/custom-laptop-1.webp'}" alt="${prod.title}" class="product-img primary" loading="lazy" decoding="async">
+          <img src="${hoverImage}" alt="${prod.title}" class="product-img secondary" loading="lazy" decoding="async">
         </div>
         <div class="product-info">
           <h3 class="product-title-card">${prod.title}</h3>
@@ -836,9 +836,9 @@ async function renderCatalogGrid() {
   const grid = document.getElementById('productGrid');
   if (!grid) return;
   
-  grid.innerHTML = '';
-  
   const catalog = await getCombinedCatalog();
+  
+  grid.innerHTML = '';
   
   Object.values(catalog).forEach(product => {
     const isOutOfStock = product.inStock === false;
@@ -860,8 +860,8 @@ async function renderCatalogGrid() {
       <a href="product.html?id=${product.id}">
         <div class="product-img-wrapper">
           ${badgeHtml}
-          <img src="${product.images[0]}" alt="${product.title}" class="product-img primary">
-          <img src="${hoverImage}" alt="${product.title}" class="product-img secondary">
+          <img src="${product.images[0]}" alt="${product.title}" class="product-img primary" loading="lazy" decoding="async">
+          <img src="${hoverImage}" alt="${product.title}" class="product-img secondary" loading="lazy" decoding="async">
         </div>
         <div class="product-info">
           <div class="product-rating">★ ${(product.rating || 5.0).toFixed(1)} <span style="color: var(--text-secondary); font-size: 12px;">(${product.reviews || 0})</span></div>
