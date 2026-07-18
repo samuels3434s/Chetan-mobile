@@ -708,3 +708,57 @@ input[type=number] {
   20%, 60% { transform: translateX(-8px); }
   40%, 80% { transform: translateX(8px); }
 }
+
+/* --- Custom Minimalist Confirm Dialog --- */
+.admin-confirm-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 11000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.25s ease-out;
+}
+
+.admin-confirm-dialog {
+  background-color: var(--admin-bg-secondary);
+  color: var(--admin-text-primary);
+  padding: 24px 28px;
+  border-radius: 4px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  border: 1px solid var(--admin-border);
+  font-family: var(--font-body);
+  transform: scale(0.97);
+  transition: transform 0.25s ease-out;
+}
+
+.admin-confirm-title {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--admin-accent);
+}
+
+.admin-confirm-text {
+  margin-top: 0;
+  margin-bottom: 24px;
+  font-size: 13.5px;
+  color: var(--admin-text-secondary);
+  line-height: 1.5;
+}
+
+.admin-confirm-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}

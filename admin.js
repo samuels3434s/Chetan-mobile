@@ -381,42 +381,17 @@ function showToast(message, type = 'success') {
 
 function showConfirm(message, onConfirm, onCancel) {
   const overlay = document.createElement('div');
-  overlay.style.cssText = `
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    z-index: 11000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  `;
+  overlay.className = 'admin-confirm-overlay';
   
   const dialog = document.createElement('div');
-  dialog.style.cssText = `
-    background-color: #1E1E1E;
-    color: #FAF9F6;
-    padding: 24px 28px;
-    border-radius: 8px;
-    max-width: 400px;
-    width: 90%;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-    border: 1px solid rgba(255,255,255,0.08);
-    font-family: 'Archivo', sans-serif;
-    transform: scale(0.95);
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  `;
+  dialog.className = 'admin-confirm-dialog';
   
   dialog.innerHTML = `
-    <h3 style="margin-top: 0; margin-bottom: 12px; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #B89C72;">Confirm Action</h3>
-    <p style="margin-top: 0; margin-bottom: 24px; font-size: 13.5px; color: #BBB; line-height: 1.5; font-weight: 400;">${message}</p>
-    <div style="display: flex; justify-content: flex-end; gap: 12px;">
-      <button id="confirmCancelBtn" style="background: none; border: 1px solid rgba(255,255,255,0.15); color: #FAF9F6; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'Archivo'; transition: background-color 0.2s;">Cancel</button>
-      <button id="confirmOkBtn" style="background-color: #B89C72; border: none; color: #1A1A1A; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Archivo'; transition: opacity 0.2s;">Confirm</button>
+    <h3 class="admin-confirm-title">Confirm Action</h3>
+    <p class="admin-confirm-text">${message}</p>
+    <div class="admin-confirm-actions">
+      <button id="confirmCancelBtn" class="btn-outline" style="width: auto; padding: 8px 16px;">Cancel</button>
+      <button id="confirmOkBtn" class="btn-primary" style="width: auto; padding: 8px 16px; background-color: #B89C72; color: #121212; border: none; font-weight: 700;">Confirm</button>
     </div>
   `;
   
@@ -430,7 +405,7 @@ function showConfirm(message, onConfirm, onCancel) {
   
   const closeConfirm = (confirmed) => {
     overlay.style.opacity = '0';
-    dialog.style.transform = 'scale(0.95)';
+    dialog.style.transform = 'scale(0.97)';
     setTimeout(() => {
       overlay.remove();
       if (confirmed) {
@@ -438,7 +413,7 @@ function showConfirm(message, onConfirm, onCancel) {
       } else {
         if (onCancel) onCancel();
       }
-    }, 300);
+    }, 250);
   };
   
   overlay.querySelector('#confirmCancelBtn').addEventListener('click', () => closeConfirm(false));
