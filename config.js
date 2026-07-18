@@ -27,3 +27,15 @@ const DB_CONFIG = {
   // Live URL of the storefront (used for redirecting from the private admin panel)
   STOREFRONT_URL: 'https://chetan-mobile.netlify.app'
 };
+
+// Store contact details and links (edit these to update across the entire website instantly)
+const CONTACT_CONFIG = {
+  // WhatsApp number for receiving customer orders (numeric format with country code, no + or spaces)
+  ORDER_WHATSAPP_NUMBER: "919109416554",
+
+  // Customer care WhatsApp display number
+  SUPPORT_WHATSAPP_DISPLAY: "+91 93722 92223",
+
+  // Email address for customer support
+  SUPPORT_EMAIL: "support@chetanmobile.in"
+};

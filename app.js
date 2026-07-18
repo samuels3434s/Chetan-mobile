@@ -947,6 +947,23 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
   initTheme();
 
+  // ── Populate Centralized Contacts ──
+  function populateContacts() {
+    if (typeof CONTACT_CONFIG !== 'undefined') {
+      const phoneEl = document.getElementById('supportPhoneDisplay');
+      if (phoneEl && CONTACT_CONFIG.SUPPORT_WHATSAPP_DISPLAY) {
+        phoneEl.textContent = CONTACT_CONFIG.SUPPORT_WHATSAPP_DISPLAY;
+      }
+      
+      const emailLink = document.getElementById('supportEmailLink');
+      if (emailLink && CONTACT_CONFIG.SUPPORT_EMAIL) {
+        emailLink.href = `mailto:${CONTACT_CONFIG.SUPPORT_EMAIL}`;
+        emailLink.textContent = CONTACT_CONFIG.SUPPORT_EMAIL;
+      }
+    }
+  }
+  populateContacts();
+
   // ── Mobile Hamburger Menu ──
   function initMobileMenu() {
     const menuBtn = document.getElementById('mobileMenuBtn');
@@ -1067,7 +1084,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       message += `• *Grand Total:* *Rs. ${subtotal.toFixed(2)}*\n\n`;
       message += `Please confirm my order. Thank you!`;
       
-      const whatsappUrl = `https://wa.me/919109416554?text=${encodeURIComponent(message)}`;
+      const orderPhone = (typeof CONTACT_CONFIG !== 'undefined' && CONTACT_CONFIG.ORDER_WHATSAPP_NUMBER) ? CONTACT_CONFIG.ORDER_WHATSAPP_NUMBER : "919109416554";
+      const whatsappUrl = `https://wa.me/${orderPhone}?text=${encodeURIComponent(message)}`;
       
       window.open(whatsappUrl, '_blank');
       
