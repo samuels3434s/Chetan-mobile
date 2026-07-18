@@ -332,23 +332,29 @@ async function openCheckoutModal() {
   }
   
   const catalog = await getCombinedCatalog();
-  const oosItem = cart.find(item => {
+  const invalidItem = cart.find(item => {
     const catItem = catalog[item.id];
-    return catItem && catItem.inStock === false;
+    return !catItem || catItem.inStock === false;
   });
   
-  if (oosItem) {
+  if (invalidItem) {
+    const catItem = catalog[invalidItem.id];
     closeCartDrawer();
+    
+    const message = !catItem 
+      ? `The item "${invalidItem.title}" is no longer available in our catalog. Would you like to remove this item and continue checkout?`
+      : `The item "${invalidItem.title}" in your cart is currently out of stock. Would you like to remove this item and continue checkout?`;
+
     showConfirm(
-      `The item "${oosItem.title}" in your cart is currently out of stock. Would you like to remove this item and continue checkout?`,
+      message,
       () => {
-        cart = cart.filter(item => item.id !== oosItem.id);
+        cart = cart.filter(item => item.id !== invalidItem.id);
         saveCart();
-        showToast(`Removed "${oosItem.title}" from your cart.`, "success");
+        showToast(`Removed "${invalidItem.title}" from your cart.`, "success");
         openCheckoutModal();
       },
       () => {
-        showToast("Please remove out-of-stock items to complete checkout.", "error");
+        showToast("Please remove unavailable items to complete checkout.", "error");
         openCartDrawer();
       }
     );
@@ -1043,13 +1049,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       const catalog = await getCombinedCatalog();
       
-      // Double check stock status on final submit
-      const oosItem = cart.find(item => {
+      // Double check availability on final submit
+      const invalidItem = cart.find(item => {
         const catItem = catalog[item.id];
-        return catItem && catItem.inStock === false;
+        return !catItem || catItem.inStock === false;
       });
-      if (oosItem) {
-        showToast(`Checkout failed. "${oosItem.title}" is out of stock.`, "error");
+      if (invalidItem) {
+        const catItem = catalog[invalidItem.id];
+        const reason = !catItem ? "is no longer available" : "is out of stock";
+        showToast(`Checkout failed. "${invalidItem.title}" ${reason}.`, "error");
         closeCheckoutModal();
         openCartDrawer();
         return;
