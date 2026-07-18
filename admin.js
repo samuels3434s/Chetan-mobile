@@ -618,6 +618,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (mainInput) {
       mainInput.value = '';
       delete mainInput.dataset.uploadedUrl;
+      const label = mainInput.closest('.custom-file-upload');
+      if (label) label.classList.remove('has-file');
+      const labelText = mainInput.parentNode.querySelector('.upload-label-text');
+      if (labelText) labelText.textContent = 'Select Image File';
     }
   };
 
@@ -632,11 +636,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       const row = document.createElement('div');
       row.className = 'image-upload-row';
-      row.style.cssText = 'margin-bottom: 10px; display: flex; align-items: center; gap: 8px;';
+      row.style.cssText = 'margin-bottom: 12px; display: flex; align-items: center; gap: 8px;';
       row.innerHTML = `
         <div style="flex-grow: 1;">
-          <span style="font-size: 11px; color: var(--admin-text-secondary); display: block; margin-bottom: 4px;">Additional Image</span>
-          <input type="file" class="form-input prod-image-input" accept="image/*" style="background-color: var(--admin-bg-primary); border-style: dashed; padding: 10px;">
+          <span style="font-size: 11px; color: var(--admin-text-secondary); display: block; margin-bottom: 6px;">Additional Image</span>
+          <label class="custom-file-upload">
+            <input type="file" class="form-input prod-image-input" accept="image/*" style="display: none;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="upload-icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+            <span class="upload-label-text">Select Image File</span>
+          </label>
         </div>
         <button type="button" class="btn-delete remove-image-field-btn" style="width: auto; padding: 8px 12px; margin-top: 18px; background-color: transparent; border: 1px solid var(--admin-border); color: var(--admin-text-secondary); height: 38px; border-radius: 4px; display: flex; align-items: center; justify-content: center;" title="Remove field">
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -681,10 +689,21 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (!e.target.classList.contains('prod-image-input')) return;
       
       const file = e.target.files[0];
+      const label = e.target.closest('.custom-file-upload');
+      const labelText = label ? label.querySelector('.upload-label-text') : null;
+
       if (!file) {
         delete e.target.dataset.uploadedUrl;
+        if (label) label.classList.remove('has-file');
+        if (labelText) labelText.textContent = 'Select Image File';
         rebuildImagesTextarea();
         return;
+      }
+
+      if (label) label.classList.add('has-file');
+      if (labelText) {
+        const truncatedName = file.name.length > 25 ? file.name.substring(0, 22) + '...' : file.name;
+        labelText.textContent = truncatedName;
       }
 
       if (uploadStatus) {

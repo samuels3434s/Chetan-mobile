@@ -762,3 +762,40 @@ input[type=number] {
   justify-content: flex-end;
   gap: 12px;
 }
+
+/* --- Premium Custom File Upload Input --- */
+.custom-file-upload {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px dashed var(--admin-border);
+  background-color: var(--admin-bg-primary);
+  padding: 10px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--admin-text-secondary);
+  font-size: 13px;
+  transition: border-color 0.2s, color 0.2s;
+  user-select: none;
+}
+
+.custom-file-upload:hover {
+  border-color: var(--admin-accent);
+  color: var(--admin-text-primary);
+}
+
+.custom-file-upload .upload-icon {
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+.custom-file-upload:hover .upload-icon {
+  opacity: 1;
+  color: var(--admin-accent);
+}
+
+.custom-file-upload.has-file {
+  border-color: var(--admin-accent);
+  color: var(--admin-text-primary);
+  border-style: solid;
+}
