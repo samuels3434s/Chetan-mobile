@@ -325,13 +325,13 @@ function renderCartItems() {
 }
 
 // 5. Checkout Dialog logic
-function openCheckoutModal() {
+async function openCheckoutModal() {
   if (cart.length === 0) {
     showToast("Please add items to your cart before checking out.", "error");
     return;
   }
   
-  const catalog = getCombinedCatalog();
+  const catalog = await getCombinedCatalog();
   const oosItem = cart.find(item => {
     const catItem = catalog[item.id];
     return catItem && catItem.inStock === false;
@@ -1025,6 +1025,18 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
 
       const catalog = await getCombinedCatalog();
+      
+      // Double check stock status on final submit
+      const oosItem = cart.find(item => {
+        const catItem = catalog[item.id];
+        return catItem && catItem.inStock === false;
+      });
+      if (oosItem) {
+        showToast(`Checkout failed. "${oosItem.title}" is out of stock.`, "error");
+        closeCheckoutModal();
+        openCartDrawer();
+        return;
+      }
       let message = `*NEW ORDER - CHETAN MOBILE*\n\n`;
       message += `*Customer Details:*\n`;
       message += `• *Name:* ${name}\n`;
