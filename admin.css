@@ -377,29 +377,86 @@ body {
   }
   
   .table-wrapper {
-    margin: 0 -16px;
-    border-radius: 0;
-    border-left: none;
-    border-right: none;
+    background-color: transparent;
+    border: none;
+    margin: 0;
+    overflow-x: visible;
   }
   
   .admin-table {
-    min-width: 600px;
+    min-width: 100% !important;
   }
   
-  .admin-table th, .admin-table td {
-    padding: 12px 16px;
+  .admin-table thead {
+    display: none;
+  }
+  
+  .admin-table tbody,
+  .admin-table tr,
+  .admin-table td {
+    display: block;
+    width: 100%;
+  }
+  
+  .admin-table tr {
+    background-color: var(--admin-bg-secondary);
+    border: 1px solid var(--admin-border);
+    border-radius: var(--admin-radius);
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .admin-table tr:last-child td {
+    border-bottom: 1px dashed var(--admin-border);
+  }
+  
+  .admin-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0 !important;
+    border-bottom: 1px dashed var(--admin-border);
+    text-align: right;
     font-size: 13px;
   }
   
-  .admin-table img {
-    width: 40px;
-    height: 40px;
+  .admin-table td:last-child {
+    border-bottom: none;
+    justify-content: flex-end;
+    padding-top: 14px !important;
+  }
+  
+  .admin-table td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    color: var(--admin-text-secondary);
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    text-align: left;
+  }
+  
+  .admin-table td[data-label="Img"] {
+    justify-content: center;
+    border-bottom: none;
+    padding-bottom: 4px !important;
+  }
+  
+  .admin-table td[data-label="Img"]::before {
+    display: none;
+  }
+  
+  .admin-table td[data-label="Img"] img {
+    width: 64px !important;
+    height: 64px !important;
+    border-radius: 8px;
+    margin: 0 auto;
   }
   
   .badge {
-    padding: 3px 6px;
-    font-size: 9px;
+    padding: 4px 8px;
+    font-size: 10px;
   }
 }
 
@@ -473,21 +530,6 @@ body {
     font-size: 14px;
     margin-bottom: 16px;
     padding-bottom: 10px;
-  }
-  
-  .admin-table th, .admin-table td {
-    padding: 10px 12px;
-    font-size: 12px;
-  }
-  
-  .admin-table img {
-    width: 36px;
-    height: 36px;
-  }
-  
-  .badge {
-    padding: 2px 5px;
-    font-size: 8px;
   }
   
   .form-group > div[style*="grid-template-columns"] {

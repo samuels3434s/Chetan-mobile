@@ -201,23 +201,23 @@ async function refreshAdminTable() {
     const isOutOfStock = prod.inStock === false;
     
     tr.innerHTML = `
-      <td><img src="${prod.images && prod.images.length > 0 ? prod.images[0] : 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=800'}" alt="${prod.title}"></td>
-      <td style="font-family: monospace; font-weight: 700; color: var(--admin-accent); font-size: 14px; letter-spacing: 0.05em;">${prod.code || 'NO-CODE'}</td>
-      <td>
+      <td data-label="Img"><img src="${prod.images && prod.images.length > 0 ? prod.images[0] : 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=800'}" alt="${prod.title}"></td>
+      <td data-label="SKU" style="font-family: monospace; font-weight: 700; color: var(--admin-accent); font-size: 14px; letter-spacing: 0.05em;">${prod.code || 'NO-CODE'}</td>
+      <td data-label="Product">
         <strong style="color: var(--admin-text-primary); font-size: 14px;">${prod.title}</strong>
         <br>
         <span style="font-size: 11px; color: var(--admin-text-secondary);">ID: ${prod.id}</span>
       </td>
-      <td style="text-transform: capitalize; color: var(--admin-text-secondary); font-size: 13px;">
+      <td data-label="Category" style="text-transform: capitalize; color: var(--admin-text-secondary); font-size: 13px;">
         ${prod.category.replace('-', ' ')}
       </td>
-      <td style="font-weight: 700; color: var(--admin-accent);">Rs. ${prod.price.toFixed(2)}</td>
-      <td>
+      <td data-label="Price" style="font-weight: 700; color: var(--admin-accent);">Rs. ${prod.price.toFixed(2)}</td>
+      <td data-label="Stock">
         <span class="badge ${isOutOfStock ? 'badge-out-of-stock' : 'badge-in-stock'}">
           ${isOutOfStock ? 'Out Of Stock' : 'In Stock'}
         </span>
       </td>
-      <td>
+      <td data-label="Actions">
         <div style="display: flex; gap: 8px;">
           <button class="btn-primary" style="padding: 6px 12px; font-size: 12px; width: auto;" onclick="editProduct('${prod.id}')">Edit</button>
           <button class="btn-delete" onclick="removeProduct('${prod.id}')">Delete</button>
